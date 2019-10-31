@@ -26,7 +26,7 @@ AdminSite.index_title = "Nepal_Cart title"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+   
     path('search', views.search, name='search'),
     path('about/', views.about, name='about'),
     path('blog/', views.blog, name='blog'),
@@ -44,6 +44,5 @@ urlpatterns = [
     path('single/', views.single, name='single'),
     path('women/', views.women, name='women'),
     path('womens/', views.womens, name='womens'),
-    path('login/', views.login, name='login'),
-    path('accounts/', include('accounts.urls')),
+    path('', include('accounts.urls')),
 ]

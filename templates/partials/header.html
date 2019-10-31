@@ -12,7 +12,7 @@
                 <!-- //logo -->
                 <div class="w3ls_right_nav ml-auto d-flex">
                     <!-- search form -->
-                    <form class="nav-search form-inline my-0 form-control" action="{% url 'home' %}" method="post">
+                    <form class="nav-search form-inline my-0 form-control" action="{% url 'signup' %}" method="post">
                     {% csrf_token %}
                         <select class="form-control input-lg" name="category">
                             <option value="all">Search our store</option>
@@ -52,9 +52,13 @@
                     <!-- search form -->
                     <div class="nav-icon d-flex">
                         <!-- sigin and sign up -->
-                        <a class="text-dark login_btn align-self-center mx-3" href="#myModal_btn" data-toggle="modal" data-target="#myModal_btn">
+                        {% if not user.is_authenticated %}
+                        <a class="text-dark login_btn align-self-center mx-3" href="{% url 'signup'%}" data-toggle="modal" data-target="#myModal_btn">
                             <i class="far fa-user"></i>
                         </a>
+                        {% else %}
+                        Logged in as {{ request.user.username }}<a href="{% url 'logout'%} "> logout</a>
+                        {% endif %}
                         <!-- sigin and sign up -->
                         <!-- shopping cart -->
                         <div class="cart-mainf">
@@ -82,7 +86,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto text-center">
                         <li class="nav-item">
-                            <a class="nav-link  active" href="{% url 'home' %}">Home
+                            <a class="nav-link  active" href="{% url 'signup' %}">Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>

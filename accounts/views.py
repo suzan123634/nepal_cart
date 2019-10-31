@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import RegisterForm
+from .forms import RegisterForm,LoginForm
+from django.contrib.auth import login, authenticate,logout
 
 def user_register(request):
     # if this is a POST request we need to process the form data
-    template = 'accounts/signup.html'
+    template = 'index.html'
    
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -22,7 +23,7 @@ def user_register(request):
                     'form': form,
                     'error_message': 'Email already exists.'
                 })
-            elif form.cleaned_data['password'] != form.cleaned_data['password_repeat']:
+            elif form.cleaned_data['password'] != form.cleaned_data['Confirm_Password']:
                 return render(request, template, {
                     'form': form,
                     'error_message': 'Passwords do not match.'
@@ -37,16 +38,43 @@ def user_register(request):
                 # user.first_name = form.cleaned_data['first_name']
                 # user.last_name = form.cleaned_data['last_name']
                 # user.phone_number = form.cleaned_data['phone_number']
-                user.save()
+                #user.save()
                
                 # Login the user
                 login(request, user)
                
                 # redirect to accounts page:
-                return HttpResponseRedirect('/mymodule/account')
+                return HttpResponseRedirect('/')
 
    # No post data availabe, let's just show the page.
     else:
         form = RegisterForm()
 
-    return render(request, template, {'form': form})
+    return render(request, template, {'u_form': form})
+
+def login_user(request):
+    template="index.html"
+    form = LoginForm(request.POST)
+
+    if request.method=='POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+
+            password =form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                print("ashesh")
+                login(request, user)
+                return HttpResponseRedirect('/')
+
+                
+            else:
+                form = LoginForm()
+    return render(request,template,{'form':form})
+
+                
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/')

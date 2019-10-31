@@ -1,4 +1,6 @@
 {% load static %}
+{% if not user.is_authenticated %}
+
  <!-- sign up Modal -->
     <div class="modal fade" id="myModal_btn" tabindex="-1" role="dialog" aria-labelledby="myModal_btn" aria-hidden="true">
         <div class="agilemodal-dialog modal-dialog" role="document">
@@ -23,23 +25,19 @@
                         {% endif %}
                                 <div class="form-group">
                                     <label for="recipient-name1" class="col-form-label">username</label>
-                                    <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name1" required="">
-                                {{ form.username }}
+                                {{ u_form.username }}
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-email" class="col-form-label">Email</label>
-                                    <input type="email" class="form-control" placeholder=" " name="Email" id="recipient-email" required="">
-                                    {{ form.email }}
+                                    {{ u_form.email }}
                                 </div>
                                 <div class="form-group">
                                     <label for="password1" class="col-form-label">Password</label>
-                                    <input type="password" class="form-control" placeholder=" " name="Password" id="password1" required="">
-                                    {{ form.password }}
+                                    {{ u_form.password }}
                                 </div>
                                 <div class="form-group">
                                     <label for="password2" class="col-form-label">Confirm_Password</label>
-                                    <input type="password" class="form-control" placeholder=" " name="Confirm Password" id="password2" required="">
-                                    {{ form.password_repeat }}
+                                    {{ u_form.Confirm_Password }}
                                 </div>
                                 <div class="sub-w3l">
                                     <div class="sub-agile">
@@ -63,6 +61,7 @@
         </div>
     </div>
     <!-- //signup modal -->
+  
     <!-- signin Modal -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModal1" aria-hidden="true">
         <div class="agilemodal-dialog modal-dialog" role="document">
@@ -79,14 +78,16 @@
                             <img src="{% static 'images/p3.png' %}" class="img-fluid" alt="login_image" />
                         </div>
                         <div class="col-md-6">
-                            <form action="#" method="post">
+                            <form action="{% url 'login' %}" method="post">
+                              {% csrf_token %}
+
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Your Name</label>
-                                    <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name" required="">
+                                    {{form.username}}
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
-                                    <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                                    {{form.password}}
                                 </div>
                                 <div class="right-w3l">
                                     <input type="submit" class="form-control" value="Login">
@@ -99,3 +100,4 @@
         </div>
     </div>
     <!-- signin Modal -->
+{% endif %}

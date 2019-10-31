@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-def home(request):
-    return render(request, template_name='index.html')
 
 def search(request):
     return render(request, template_name='index.html')
@@ -54,5 +52,3 @@ def women(request):
 def womens(request):
     return render(request, template_name='pages/womens.html')
 
-def login(request):
-    return render(request, template_name='pages/login.html')
